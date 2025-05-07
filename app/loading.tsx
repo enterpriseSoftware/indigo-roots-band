@@ -13,7 +13,13 @@ const LoadingPage = () => {
             width: "100vw",
           }}
         >
-          <Image src={loader} height={150} alt="Loading..." width={150} />
+          <Image 
+            src={loader} 
+            height={150} 
+            alt="Loading..." 
+            width={150}
+            style={{ width: 'auto' }}
+          />
           <h1 className="text-2xl font-bold mt-4">Loading...</h1>
         </div>
       </div>

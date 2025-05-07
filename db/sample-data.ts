@@ -1,4 +1,4 @@
-const sampleData = {
+const sampleProducts = {
   products: [
     {
       name: 'Polo Sporting Stretch Shirt',
@@ -105,4 +105,4 @@ const sampleData = {
   ],
 };
 
-export default sampleData;
+export { sampleProducts };
