@@ -7,7 +7,30 @@ export function cn(...inputs: ClassValue[]) {
 
 // Convert a Prisma object into a regular JS object
 export function convertToPlainObject<T>(value: T): T {
-  return JSON.parse(JSON.stringify(value));
+  if (value === null || value === undefined) {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(item => convertToPlainObject(item)) as T;
+  }
+
+  if (typeof value === 'object') {
+    const result: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(value)) {
+      // Handle Prisma Decimal types
+      if (val && typeof val === 'object' && 'toJSON' in val) {
+        const decimalValue = val.toJSON();
+        // Convert to string with 2 decimal places
+        result[key] = formatNumberWithDecimal(Number(decimalValue));
+      } else {
+        result[key] = convertToPlainObject(val);
+      }
+    }
+    return result as T;
+  }
+
+  return value;
 }
 
 //format number with decimal places
